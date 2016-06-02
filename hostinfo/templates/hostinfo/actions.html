@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+ <head>
+	<meta charset="utf-8">
+	<title>{% block title %}欢迎光临{% endblock title %}-李明华</title>
+	<link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap.min.css">
+ </head>
+ <body>
+	{% block content %}
+		<div class="table-responsive">
+		<table class="table table-striped table-bordered">
+		<h1>进行如下简单操作</h1>
+		<thead>
+		<tr>
+		<th>主机名</th>
+		<th>IP</th>
+		<th>tomcat日志</th>
+		<th>重启tomcat</th> 
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td>{{h.name}}</td>
+		<td>{{h.ip}}</td> 
+		<td><a href={% url 'tomlog' h.ip %}>100行日志</a></td>
+		<td><a href={% url 'tomre' h.ip %}>重启tomcat</a></td>
+		</tr>
+		</tbody>
+		</table>
+		<p>执行任意命令</p>
+		<form action={% url 'command' %} method="get">
+		    command: <input type="text" id="command" name="command"> <br>
+		    ip:<input type='text' id='ip' name='ip'> <br>
+		    <button type="button" id='subm'>执行</button>
+		    <p>result: <span id='result'></span></p>
+		</form>
+ 
+		<form action={% url 'add' %} method="get">
+		    a: <input type="text" name="a"> <br>
+		    b: <input type="text" name="b"> <br>
+     
+		    <input type="submit" value="提交">
+		</form>
+		<script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script>
+		    $(document).ready(function(){
+			 $('#subm').click(function(){
+      			    $.getJSON({% url 'command' %},function(data){
+		             for (var i = data.length - 1; i >= 0; i--) 
+			     {
+    		        	  $('#result').append(' ' + data[i])
+           		     }
+		        })
+		      })
+		</script>  
+		</div>
+	{% endblock content %}
+	<script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="http://apps.bdimg.com/libs/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+ </body>
+</html>

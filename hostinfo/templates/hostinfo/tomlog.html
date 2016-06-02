@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+ <head>
+	<meta charset="utf8">
+	<title>{% block title %}欢迎光临{% endblock title %}-李明华</title>
+ </head>
+ <body>
+	{% block content %}
+		<h1>tomcat50行log</h1>
+		{% for i in data %}
+			<p>{{i}}</p>
+		{% endfor %}
+	{% endblock content %}
+ </body>
+</html>
